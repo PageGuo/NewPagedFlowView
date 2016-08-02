@@ -73,6 +73,11 @@ typedef enum{
 @property (nonatomic, weak) NSTimer *timer;
 
 /**
+ *  自动切换视图的时间,默认是5.0
+ */
+@property (nonatomic, assign) CGFloat autoTime;
+
+/**
  *  总共多少页
  */
 @property (nonatomic, assign) NSInteger orginPageCount;

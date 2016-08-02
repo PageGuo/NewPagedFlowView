@@ -32,6 +32,7 @@
     
     _minimumPageAlpha = 1.0;
     _minimumPageScale = 1.0;
+    _autoTime = 5.0;
     
     self.visibleRange = NSMakeRange(0, 0);
     
@@ -59,7 +60,7 @@
 
 - (void)startTimer {
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
     
 }
 
@@ -347,7 +348,7 @@
                     //滚到第二组
                     [_scrollView setContentOffset:CGPointMake(_pageSize.width * self.orginPageCount, 0) animated:NO];
                     
-//                    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+//                    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
 //                    self.page = self.orginPageCount + 1;
                     self.page = self.orginPageCount + 1;
                 }
@@ -501,7 +502,7 @@
     
     if (self.orginPageCount > 1) {
         
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
         self.page = self.orginPageCount + 1;
     }
 }
