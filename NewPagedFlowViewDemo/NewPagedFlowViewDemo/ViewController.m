@@ -24,13 +24,17 @@
  */
 @property (nonatomic, strong) NSMutableArray *imageArray;
 
+/**
+ *  指示label
+ */
+@property (nonatomic, strong) UILabel *indicateLabel;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
     for (int index = 0; index < 5; index++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Yosemite%02d",index]];
@@ -62,6 +66,9 @@
     [pageFlowView addSubview:pageControl];
     [pageFlowView startTimer];
     [self.view addSubview:pageFlowView];
+    
+    //添加到主view上
+    [self.view addSubview:self.indicateLabel];
     
 }
 
@@ -103,6 +110,8 @@
     
     NSLog(@"点击了第%ld张图",(long)index);
     
+    self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)index];
+    
 }
 
 - (NSMutableArray *)imageArray {
@@ -117,6 +126,19 @@
         _bannerImageArray = [NSMutableArray array];
     }
     return _bannerImageArray;
+}
+
+- (UILabel *)indicateLabel {
+    
+    if (_indicateLabel == nil) {
+        _indicateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, Width, 16)];
+        _indicateLabel.textColor = [UIColor blueColor];
+        _indicateLabel.font = [UIFont systemFontOfSize:16.0];
+        _indicateLabel.textAlignment = NSTextAlignmentCenter;
+        _indicateLabel.text = @"指示Label";
+    }
+    
+    return _indicateLabel;
 }
 
 @end
