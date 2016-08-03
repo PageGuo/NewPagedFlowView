@@ -3,8 +3,10 @@
 //  dianshang
 //
 //  Created by sskh on 16/7/13.
-//  Copyright © 2016年 ssdk. All rights reserved.
-//
+//  Copyright © 2016年 Mars. All rights reserved.
+//  Designed By PageGuo,
+//  QQ:799573715
+//  github:https://github.com/PageGuo/NewPagedFlowView
 
 #import "NewPagedFlowView.h"
 #import "PGIndexBannerSubiew.h"

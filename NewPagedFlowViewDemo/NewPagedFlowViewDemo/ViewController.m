@@ -2,12 +2,10 @@
 //  ViewController.m
 //  NewPagedFlowViewDemo
 //
-//  Created by sskh on 16/8/2.
-//  Copyright © 2016年 robertcell.net. All rights reserved.
-//
-/*
- github地址:
- */
+//  Copyright © 2016年 Mars. All rights reserved.
+//  Designed By PageGuo,
+//  QQ:799573715
+//  github:https://github.com/PageGuo/NewPagedFlowView
 
 #import "ViewController.h"
 #import "NewPagedFlowView.h"
@@ -104,6 +102,11 @@
     
     self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)index + 1];
     
+}
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    
+    NSLog(@"滚动到了第%ld页",pageNumber);
 }
 
 - (NSMutableArray *)imageArray {
