@@ -13,7 +13,15 @@
 
 @property (nonatomic, assign, readwrite) NSInteger currentPageIndex;
 
+/**
+ *  计时器用到的页数
+ */
 @property (nonatomic, assign) NSInteger page;
+
+/**
+ *  原始页数
+ */
+@property (nonatomic, assign) NSInteger orginPageCount;
 
 @end
 
@@ -164,7 +172,7 @@
     UIView *cell = [_cells objectAtIndex:pageIndex];
     
     if ((NSObject *)cell == [NSNull null]) {
-        cell = [_dataSource flowView:self cellForPageAtIndex:pageIndex];
+        cell = [_dataSource flowView:self cellForPageAtIndex:pageIndex % self.orginPageCount];
         NSAssert(cell!=nil, @"datasource must not return nil");
         [_cells replaceObjectAtIndex:pageIndex withObject:cell];
         
@@ -314,7 +322,11 @@
         
         //重置pageCount
         if (_dataSource && [_dataSource respondsToSelector:@selector(numberOfPagesInFlowView:)]) {
-            _pageCount = [_dataSource numberOfPagesInFlowView:self];
+            //总页数
+            _pageCount = [_dataSource numberOfPagesInFlowView:self] * 3;
+            
+            //原始页数
+            self.orginPageCount = [_dataSource numberOfPagesInFlowView:self];
             
             if (self.pageControl && [self.pageControl respondsToSelector:@selector(setNumberOfPages:)]) {
                 [self.pageControl setNumberOfPages:self.orginPageCount];
@@ -349,8 +361,8 @@
                     [_scrollView setContentOffset:CGPointMake(_pageSize.width * self.orginPageCount, 0) animated:NO];
                     
 //                    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
-//                    self.page = self.orginPageCount + 1;
-                    self.page = self.orginPageCount + 1;
+//                    self.page = self.orginPageCount;
+                    self.page = self.orginPageCount;
                 }
                 
                 break;
@@ -359,6 +371,14 @@
                 _scrollView.contentSize = CGSizeMake(_pageSize.width ,_pageSize.height * _pageCount);
                 CGPoint theCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
                 _scrollView.center = theCenter;
+                
+                if (self.orginPageCount > 1) {
+                    //滚到第二组
+                    [_scrollView setContentOffset:CGPointMake(0, _pageSize.height * self.orginPageCount) animated:NO];
+
+                    self.page = self.orginPageCount;
+                }
+                
                 break;
             }
             default:
@@ -444,26 +464,53 @@
             pageIndex = (int)floor(_scrollView.contentOffset.x / _pageSize.width) % self.orginPageCount;
             break;
         case NewPagedFlowViewOrientationVertical:
-            pageIndex = floor(_scrollView.contentOffset.y / _pageSize.height);
+            pageIndex = (int)floor(_scrollView.contentOffset.y / _pageSize.height) % self.orginPageCount;
             break;
         default:
             break;
     }
     
     if (self.orginPageCount > 1) {
-        
-        if (scrollView.contentOffset.x / _pageSize.width >= 2 * self.orginPageCount) {
-            
-            [scrollView setContentOffset:CGPointMake(_pageSize.width * self.orginPageCount, 0) animated:NO];
-            
-            self.page = self.orginPageCount;
-            
+        switch (self.orientation) {
+            case NewPagedFlowViewOrientationHorizontal:
+            {
+                    if (scrollView.contentOffset.x / _pageSize.width >= 2 * self.orginPageCount) {
+                    
+                    [scrollView setContentOffset:CGPointMake(_pageSize.width * self.orginPageCount, 0) animated:NO];
+                    
+                    self.page = self.orginPageCount;
+                    
+                    }
+                    
+                    if (scrollView.contentOffset.x / _pageSize.width <= self.orginPageCount - 1) {
+                        [scrollView setContentOffset:CGPointMake((2 * self.orginPageCount - 1) * _pageSize.width, 0) animated:NO];
+                        
+                        self.page = 2 * self.orginPageCount;
+                    }
+                
+            }
+                break;
+            case NewPagedFlowViewOrientationVertical:
+            {
+                if (scrollView.contentOffset.y / _pageSize.height >= 2 * self.orginPageCount) {
+                    
+                    [scrollView setContentOffset:CGPointMake(_pageSize.height * self.orginPageCount, 0) animated:NO];
+                    
+                    self.page = self.orginPageCount;
+                    
+                    }
+                
+                if (scrollView.contentOffset.y / _pageSize.height <= self.orginPageCount - 1) {
+                    [scrollView setContentOffset:CGPointMake((2 * self.orginPageCount - 1) * _pageSize.height, 0) animated:NO];
+                    self.page = 2 * self.orginPageCount;
+                    }
+
+            }
+                break;
+            default:
+                break;
         }
         
-        if (scrollView.contentOffset.x / _pageSize.width <= self.orginPageCount - 1) {
-            [scrollView setContentOffset:CGPointMake((2 * self.orginPageCount - 1) * _pageSize.width, 0) animated:NO];
-            
-        }
         
     }else {
         
@@ -471,8 +518,6 @@
         
         
     }
-    
-    
     
     
     [self setPagesAtContentOffset:scrollView.contentOffset];
@@ -503,7 +548,35 @@
     if (self.orginPageCount > 1) {
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
-        self.page = self.orginPageCount + 1;
+        switch (self.orientation) {
+            case NewPagedFlowViewOrientationHorizontal:
+            {
+                if (self.page == floor(_scrollView.contentOffset.x / _pageSize.width)) {
+                    
+                    self.page = floor(_scrollView.contentOffset.x / _pageSize.width) + 1;
+                    
+                }else {
+                    
+                    self.page = floor(_scrollView.contentOffset.x / _pageSize.width);
+                }
+            }
+                break;
+            case NewPagedFlowViewOrientationVertical:
+            {
+                if (self.page == floor(_scrollView.contentOffset.y / _pageSize.height)) {
+                    
+                    self.page = floor(_scrollView.contentOffset.y / _pageSize.height) + 1;
+                    
+                }else {
+                    
+                    self.page = floor(_scrollView.contentOffset.y / _pageSize.height);
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        
     }
 }
 

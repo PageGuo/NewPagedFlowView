@@ -5,6 +5,9 @@
 //  Created by sskh on 16/8/2.
 //  Copyright © 2016年 robertcell.net. All rights reserved.
 //
+/*
+ github地址:
+ */
 
 #import "ViewController.h"
 #import "NewPagedFlowView.h"
@@ -15,12 +18,7 @@
 @interface ViewController ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
 
 /**
- *  无限轮播要使用的数组
- */
-@property (nonatomic, strong) NSMutableArray *bannerImageArray;
-
-/**
- *  真实数量的图片数组
+ *  图片数组
  */
 @property (nonatomic, strong) NSMutableArray *imageArray;
 
@@ -41,11 +39,6 @@
         [self.imageArray addObject:image];
     }
     
-    
-    for (NSInteger imageIndex = 0; imageIndex < 3; imageIndex ++) {
-        [self.bannerImageArray addObjectsFromArray:self.imageArray];
-    }
-    
     [self setupUI];
 }
 
@@ -58,7 +51,6 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
-    pageFlowView.orginPageCount = self.imageArray.count;
     
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
@@ -84,7 +76,7 @@
 
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-    return [self.bannerImageArray count];
+    return self.imageArray.count;
 }
 
 - (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -96,7 +88,7 @@
     }
     
 //    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
-    bannerView.mainImageView.image = self.bannerImageArray[index];
+    bannerView.mainImageView.image = self.imageArray[index];
     bannerView.allCoverButton.tag = index;
     [bannerView.allCoverButton addTarget:self action:@selector(didSelectBannerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -106,11 +98,11 @@
 #pragma mark --点击轮播图
 - (void)didSelectBannerButtonClick:(UIButton *) sender {
     
-    NSInteger index = sender.tag % self.imageArray.count;
+    NSInteger index = sender.tag;
     
-    NSLog(@"点击了第%ld张图",(long)index);
+    NSLog(@"点击了第%ld张图",(long)index + 1);
     
-    self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)index];
+    self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)index + 1];
     
 }
 
@@ -119,13 +111,6 @@
         _imageArray = [NSMutableArray array];
     }
     return _imageArray;
-}
-
-- (NSMutableArray *)bannerImageArray {
-    if (_bannerImageArray == nil) {
-        _bannerImageArray = [NSMutableArray array];
-    }
-    return _bannerImageArray;
 }
 
 - (UILabel *)indicateLabel {

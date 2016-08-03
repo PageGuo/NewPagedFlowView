@@ -241,6 +241,7 @@
 				TargetAttributes = {
 					FB80213C1D50891C005E7B14 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = XF9YMRY452;
 					};
 					FB8021551D50891C005E7B14 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -449,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = NewPagedFlowViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.robert.NewPagedFlowViewDemo;
@@ -460,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = NewPagedFlowViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.robert.NewPagedFlowViewDemo;
@@ -532,6 +535,7 @@
 				FB80216C1D50891C005E7B14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FB80216D1D50891C005E7B14 /* Build configuration list for PBXNativeTarget "NewPagedFlowViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -540,6 +544,7 @@
 				FB80216F1D50891C005E7B14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FB8021701D50891C005E7B14 /* Build configuration list for PBXNativeTarget "NewPagedFlowViewDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -548,6 +553,7 @@
 				FB8021721D50891C005E7B14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -77,10 +77,6 @@ typedef enum{
  */
 @property (nonatomic, assign) CGFloat autoTime;
 
-/**
- *  总共多少页
- */
-@property (nonatomic, assign) NSInteger orginPageCount;
 
 - (void)reloadData;
 
