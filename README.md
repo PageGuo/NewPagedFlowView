@@ -10,7 +10,7 @@ Version 1.0:
 
 ###2.动画效果
 
-![NewPagedFlowViewGif](http://i2.piimg.com/1949/5e994658e6176a7d.gif)
+![NewPagedFlowViewGif](http://ww4.sinaimg.cn/mw690/9c6a8c79jw1f6geyiao4tg20a00dc4qu.gif)
 
 ###3.代码示例
     NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 64, Width, (Width - 84) * 9 / 16 + 24)];
