@@ -1,5 +1,14 @@
-# NewPagedFlowView 1.0
+# NewPagedFlowView 1.1.2
 ###1.实现了什么功能
+#####Version 1.1.2:
+
+ * 处理一张图片时的展示问题
+ * 处理一张图时的图片滚动bug
+ * 非当前显示图片缩放更美观
+ * 增加代理方法:- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex;(点击了第几个cell)
+
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2016-08-08)**
+***
 #####Version 1.1.1:
 
  * 简化数组,使用时只需创建一个图片数组即可
@@ -19,10 +28,10 @@
 * 特点:1.无限轮播;2.自动轮播;3.电影票样式的层次感;4.非当前显示view具有缩放和透明的特效
 
 ###2.动画效果
-
-![NewPagedFlowViewGif](http://code.cocoachina.com/uploads/attachments/20160802/132352/36b5a77373e3c39db3b707953ba33976.png)
+<img src="gif/NewPagedFlowViewGif.gif" width="100%">
 </br>动图请移步:</br>
   <a href="http://example.com/">http://ww4.sinaimg.cn/mw690/9c6a8c79jw1f6geyiao4tg20a00dc4qu.gif</a>
+
 ###3.功能介绍
 	/**
 	 *  开启定时器
@@ -56,6 +65,16 @@
 	 *  @param flowView   <#flowView description#>
 	 */
 	- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView;
+	
+	/**
+     *  点击了第几个cell
+     *
+     *  @param subView 点击的控件
+     *  @param subIndex    点击控件的index
+     *
+     *  @return <#return value description#>
+     */
+     - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex;
 
 	@end
 	
@@ -75,10 +94,9 @@
 	*
 	*  @param flowView <#flowView description#>
  	*  @param index    <#index description#>
- 	
  	*  @return <#return value description#>
 	*/
-	- (UIView *)flowView:(NewPagedFlowView *)flowView 	cellForPageAtIndex:(NSInteger)index;
+    - (UIView *)flowView:(NewPagedFlowView *)flowView 	cellForPageAtIndex:(NSInteger)index;
 
 	@end
 

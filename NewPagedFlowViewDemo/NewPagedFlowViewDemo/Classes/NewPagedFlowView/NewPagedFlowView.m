@@ -20,11 +20,6 @@
  */
 @property (nonatomic, assign) NSInteger page;
 
-/**
- *  原始页数
- */
-@property (nonatomic, assign) NSInteger orginPageCount;
-
 @end
 
 @implementation NewPagedFlowView
@@ -70,7 +65,9 @@
 
 - (void)startTimer {
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+    if (self.orginPageCount > 1) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+    }
     
 }
 
@@ -129,11 +126,13 @@
                     
                     CGFloat inset = (_pageSize.width * (1 - _minimumPageScale)) * (delta / _pageSize.width)/2.0;
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
+                    cell.mainImageView.frame = cell.bounds;
                 } else {
                 
                     cell.coverView.alpha = _minimumPageAlpha;
                     CGFloat inset = _pageSize.width * (1 - _minimumPageScale) / 2.0 ;
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
+                    cell.mainImageView.frame = cell.bounds;
                 }
 
             }
@@ -154,10 +153,12 @@
                     
                     CGFloat inset = (_pageSize.height * (1 - _minimumPageScale)) * (delta / _pageSize.height)/2.0;
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
+                    cell.mainImageView.frame = cell.bounds;
                 } else {
                     cell.coverView.alpha = _minimumPageAlpha;
                     CGFloat inset = _pageSize.height * (1 - _minimumPageScale) / 2.0 ;
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
+                    cell.mainImageView.frame = cell.bounds;
                 }
     
             }
@@ -178,6 +179,10 @@
         NSAssert(cell!=nil, @"datasource must not return nil");
         [_cells replaceObjectAtIndex:pageIndex withObject:cell];
         
+        //添加点击手势
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleCellTapAction:)];
+        [cell addGestureRecognizer:singleTap];
+        cell.tag = pageIndex % self.orginPageCount;
         
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal:
@@ -324,11 +329,12 @@
         
         //重置pageCount
         if (_dataSource && [_dataSource respondsToSelector:@selector(numberOfPagesInFlowView:)]) {
-            //总页数
-            _pageCount = [_dataSource numberOfPagesInFlowView:self] * 3;
             
             //原始页数
             self.orginPageCount = [_dataSource numberOfPagesInFlowView:self];
+            
+            //总页数
+            _pageCount = self.orginPageCount == 1 ? 1: [_dataSource numberOfPagesInFlowView:self] * 3;
             
             if (self.pageControl && [self.pageControl respondsToSelector:@selector(setNumberOfPages:)]) {
                 [self.pageControl setNumberOfPages:self.orginPageCount];
@@ -578,6 +584,16 @@
             default:
                 break;
         }
+        
+    }
+}
+
+//点击了cell
+- (void)singleCellTapAction:(UIGestureRecognizer *)gesture {
+    
+    if ([self.delegate respondsToSelector:@selector(didSelectCell:withSubViewIndex:)]) {
+        
+        [self.delegate didSelectCell:gesture.view withSubViewIndex:gesture.view.tag];
         
     }
 }

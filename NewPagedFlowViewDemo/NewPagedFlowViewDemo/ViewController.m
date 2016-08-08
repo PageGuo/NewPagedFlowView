@@ -49,6 +49,7 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
+    pageFlowView.orginPageCount = self.imageArray.count;
     
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
@@ -72,6 +73,13 @@
     return CGSizeMake(Width - 84, (Width - 84) * 9 / 16);
 }
 
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+    
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    
+    self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)subIndex + 1];
+}
+
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     return self.imageArray.count;
@@ -87,21 +95,8 @@
     
 //    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
     bannerView.mainImageView.image = self.imageArray[index];
-    bannerView.allCoverButton.tag = index;
-    [bannerView.allCoverButton addTarget:self action:@selector(didSelectBannerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return bannerView;
-}
-
-#pragma mark --点击轮播图
-- (void)didSelectBannerButtonClick:(UIButton *) sender {
-    
-    NSInteger index = sender.tag;
-    
-    NSLog(@"点击了第%ld张图",(long)index + 1);
-    
-    self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)index + 1];
-    
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {

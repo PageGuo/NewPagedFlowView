@@ -20,7 +20,6 @@
         
         [self addSubview:self.mainImageView];
         [self addSubview:self.coverView];
-        [self addSubview:self.allCoverButton];
     }
     
     return self;
@@ -30,6 +29,7 @@
     
     if (_mainImageView == nil) {
         _mainImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _mainImageView.userInteractionEnabled = YES;
     }
     return _mainImageView;
 }
@@ -40,13 +40,6 @@
         _coverView.backgroundColor = [UIColor blackColor];
     }
     return _coverView;
-}
-
-- (UIButton *)allCoverButton {
-    if (_allCoverButton == nil) {
-        _allCoverButton = [[UIButton alloc] initWithFrame:self.bounds];
-    }
-    return _allCoverButton;
 }
 
 @end

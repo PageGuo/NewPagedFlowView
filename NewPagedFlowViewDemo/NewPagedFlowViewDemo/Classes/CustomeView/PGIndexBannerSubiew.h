@@ -28,9 +28,4 @@
  */
 @property (nonatomic, strong) UIView *coverView;
 
-/**
- *  覆盖button
- */
-@property (nonatomic, strong) UIButton *allCoverButton;
-
 @end

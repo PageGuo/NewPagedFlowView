@@ -78,6 +78,11 @@ typedef enum{
  */
 @property (nonatomic, assign) CGFloat autoTime;
 
+/**
+ *  原始页数
+ */
+@property (nonatomic, assign) NSInteger orginPageCount;
+
 
 - (void)reloadData;
 
@@ -127,6 +132,16 @@ typedef enum{
  *  @param flowView   <#flowView description#>
  */
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView;
+
+/**
+ *  点击了第几个cell
+ *
+ *  @param subView 点击的控件
+ *  @param subIndex    点击控件的index
+ *
+ *  @return <#return value description#>
+ */
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex;
 
 @end
 
