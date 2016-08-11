@@ -32,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"NewPagedFlowView";
+    
     for (int index = 0; index < 5; index++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Yosemite%02d",index]];
         [self.imageArray addObject:image];
@@ -49,7 +51,6 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
-    pageFlowView.orginPageCount = self.imageArray.count;
     
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];

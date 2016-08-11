@@ -20,6 +20,11 @@
  */
 @property (nonatomic, assign) NSInteger page;
 
+/**
+ *  原始页数
+ */
+@property (nonatomic, assign) NSInteger orginPageCount;
+
 @end
 
 @implementation NewPagedFlowView
@@ -464,6 +469,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     //    NSLog(@"%f",scrollView.contentOffset.x / _pageSize.width);
+    
+    if (self.orginPageCount == 0) {
+        return;
+    }
     
     NSInteger pageIndex;
     
