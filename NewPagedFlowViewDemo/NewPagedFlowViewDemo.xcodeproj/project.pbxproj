@@ -17,6 +17,7 @@
 		FB8021661D50891C005E7B14 /* NewPagedFlowViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021651D50891C005E7B14 /* NewPagedFlowViewDemoUITests.m */; };
 		FB80217A1D508BDA005E7B14 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021761D508BDA005E7B14 /* PGIndexBannerSubiew.m */; };
 		FB80217B1D508BDA005E7B14 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021791D508BDA005E7B14 /* NewPagedFlowView.m */; };
+		FBA0577F1D5C72BF002DE2E0 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		FB8021761D508BDA005E7B14 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
 		FB8021781D508BDA005E7B14 /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
 		FB8021791D508BDA005E7B14 /* NewPagedFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowView.m; sourceTree = "<group>"; };
+		FBA0577D1D5C72BF002DE2E0 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 				FB8021441D50891C005E7B14 /* AppDelegate.m */,
 				FB8021461D50891C005E7B14 /* ViewController.h */,
 				FB8021471D50891C005E7B14 /* ViewController.m */,
+				FBA0577D1D5C72BF002DE2E0 /* TestViewController.h */,
+				FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */,
 				FB8021491D50891C005E7B14 /* Main.storyboard */,
 				FB80214C1D50891C005E7B14 /* Assets.xcassets */,
 				FB80214E1D50891C005E7B14 /* LaunchScreen.storyboard */,
@@ -305,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA0577F1D5C72BF002DE2E0 /* TestViewController.m in Sources */,
 				FB80217A1D508BDA005E7B14 /* PGIndexBannerSubiew.m in Sources */,
 				FB8021481D50891C005E7B14 /* ViewController.m in Sources */,
 				FB80217B1D508BDA005E7B14 /* NewPagedFlowView.m in Sources */,

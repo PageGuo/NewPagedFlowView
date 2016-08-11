@@ -1,20 +1,18 @@
 //
-//  ViewController.m
+//  TestViewController.m
 //  NewPagedFlowViewDemo
 //
-//  Copyright © 2016年 Mars. All rights reserved.
-//  Designed By PageGuo,
-//  QQ:799573715
-//  github:https://github.com/PageGuo/NewPagedFlowView
+//  Created by sskh on 16/8/11.
+//  Copyright © 2016年 robertcell.net. All rights reserved.
+//
 
-#import "ViewController.h"
+#import "TestViewController.h"
 #import "NewPagedFlowView.h"
 #import "PGIndexBannerSubiew.h"
-#import "TestViewController.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 
-@interface ViewController ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
+@interface TestViewController ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
 
 /**
  *  图片数组
@@ -26,16 +24,20 @@
  */
 @property (nonatomic, strong) UILabel *indicateLabel;
 
+/**
+ *  轮播图
+ */
+@property (nonatomic, strong) NewPagedFlowView *pageFlowView;
+
 @end
 
-@implementation ViewController
+@implementation TestViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    self.title = @"NewPagedFlowView";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"测试" style:UIBarButtonItemStyleDone target:self action:@selector(pushVC)];
+    self.title = @"NewPagedFlowView1";
     
     for (int index = 0; index < 5; index++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Yosemite%02d",index]];
@@ -43,13 +45,6 @@
     }
     
     [self setupUI];
-}
-
-- (void)pushVC {
-    
-    TestViewController *testVC = [[TestViewController alloc] init];
-    
-    [self.navigationController pushViewController:testVC animated:YES];
 }
 
 - (void)setupUI {
@@ -67,6 +62,7 @@
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
     [pageFlowView startTimer];
+//    [self.view addSubview:pageFlowView];
     
     /****************************
      使用导航控制器(UINavigationController)
@@ -76,9 +72,11 @@
     
     UIScrollView *bottomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [bottomScrollView addSubview:pageFlowView];
-    
     [self.view addSubview:bottomScrollView];
     
+    [bottomScrollView addSubview:pageFlowView];
+    
+    self.pageFlowView = pageFlowView;
     //添加到主view上
     [self.view addSubview:self.indicateLabel];
     
@@ -114,7 +112,7 @@
         bannerView.layer.masksToBounds = YES;
     }
     
-//    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
+    //    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
     bannerView.mainImageView.image = self.imageArray[index];
     
     return bannerView;
@@ -144,5 +142,16 @@
     
     return _indicateLabel;
 }
+
+- (void)dealloc {
+    
+    /****************************
+    在dealloc或者返回按钮里停止定时器
+     ****************************/
+    
+    [self.pageFlowView stopTimer];
+}
+
+
 
 @end

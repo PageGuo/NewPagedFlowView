@@ -1,12 +1,20 @@
-# NewPagedFlowView 1.1.2
+# NewPagedFlowView 1.1.4
 ###1.实现了什么功能
-#####Version 1.1.3:
+#####Version 1.1.4:
 
- * 解决在导航控制器下使用偶尔出现bug的问题
+ * 完美解决导航控制器出现的bug
+ * 添加二级控制器
  * Main.storyboard添加导航控制器
+ * 注意:
+ 	 * 1.使用导航控制器(UINavigationController)
+     如果控制器中不存在UIScrollView或者继承自UIScrollView的UI控件
+     请使用UIScrollView作为NewPagedFlowView的容器View,才会显示正常
+     * 2.push出的二级页面,应在dealloc或者返回按钮里调用停止定时器方法
+         [self.pageFlowView stopTimer];
 
 **具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2016-08-11)**
 ***
+
 #####Version 1.1.2:
 
  * 处理一张图片时的展示问题
