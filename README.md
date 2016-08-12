@@ -55,12 +55,12 @@
  
 * 特点:1.无限轮播;2.自动轮播;3.电影票样式的层次感;4.非当前显示view具有缩放和透明的特效
 
-###2.动画效果
+###3.动画效果
 <img src="gif/NewPagedFlowViewGif.gif" width="100%">
 </br>动图请移步:</br>
   <a href="http://example.com/">http://ww4.sinaimg.cn/mw690/9c6a8c79jw1f6geyiao4tg20a00dc4qu.gif</a>
 
-###3.功能介绍
+###4.功能介绍
 	/**
 	 *  开启定时器
 	*/
@@ -128,7 +128,7 @@
 
 	@end
 
-###4.代码示例
+###5.代码示例
     NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 64, Width, (Width - 84) * 9 / 16 + 24)];
     pageFlowView.backgroundColor = [UIColor whiteColor];
     pageFlowView.delegate = self;
