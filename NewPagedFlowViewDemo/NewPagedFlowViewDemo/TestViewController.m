@@ -39,12 +39,24 @@
     
     self.title = @"NewPagedFlowView1";
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Scroll" style:UIBarButtonItemStyleDone target:self action:@selector(gotoPage)];
+    
     for (int index = 0; index < 5; index++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Yosemite%02d",index]];
         [self.imageArray addObject:image];
     }
     
     [self setupUI];
+}
+
+#pragma mark --滚动到指定的页数
+- (void)gotoPage {
+    
+    //产生跳转的随机数
+    int value = arc4random() % self.imageArray.count;
+    NSLog(@"value~~%d",value);
+    
+    [self.pageFlowView scrollToPage:value];
 }
 
 - (void)setupUI {
@@ -56,7 +68,7 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
-    
+    pageFlowView.orginPageCount = self.imageArray.count;
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
     pageFlowView.pageControl = pageControl;
@@ -83,7 +95,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
+    
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
@@ -101,10 +113,12 @@
 
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+    
     return self.imageArray.count;
 }
 
 - (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    
     PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
     if (!bannerView) {
         bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width - 84, (Width - 84) * 9 / 16)];
@@ -112,7 +126,8 @@
         bannerView.layer.masksToBounds = YES;
     }
     
-    //    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
+    //在这里下载网络图片
+    //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
     bannerView.mainImageView.image = self.imageArray[index];
     
     return bannerView;
@@ -120,9 +135,10 @@
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
-    NSLog(@"滚动到了第%ld页",pageNumber);
+    NSLog(@"TestViewController 滚动到了第%ld页",pageNumber);
 }
 
+#pragma mark --懒加载
 - (NSMutableArray *)imageArray {
     if (_imageArray == nil) {
         _imageArray = [NSMutableArray array];

@@ -20,11 +20,6 @@
  */
 @property (nonatomic, assign) NSInteger page;
 
-/**
- *  原始页数
- */
-@property (nonatomic, assign) NSInteger orginPageCount;
-
 @end
 
 @implementation NewPagedFlowView
@@ -430,16 +425,23 @@
 
 - (void)scrollToPage:(NSUInteger)pageNumber {
     if (pageNumber < _pageCount) {
+        
+        //首先停止定时器
+        [self stopTimer];
+        self.page = pageNumber + self.orginPageCount;
+        
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal:
-                [_scrollView setContentOffset:CGPointMake(_pageSize.width * pageNumber, 0) animated:YES];
+                [_scrollView setContentOffset:CGPointMake(_pageSize.width * (pageNumber + self.orginPageCount), 0) animated:YES];
                 break;
             case NewPagedFlowViewOrientationVertical:
-                [_scrollView setContentOffset:CGPointMake(0, _pageSize.height * pageNumber) animated:YES];
+                [_scrollView setContentOffset:CGPointMake(0, _pageSize.height * (pageNumber + self.orginPageCount)) animated:YES];
                 break;
         }
         [self setPagesAtContentOffset:_scrollView.contentOffset];
         [self refreshVisibleCellAppearance];
+        
+        [self startTimer];
     }
 }
 
