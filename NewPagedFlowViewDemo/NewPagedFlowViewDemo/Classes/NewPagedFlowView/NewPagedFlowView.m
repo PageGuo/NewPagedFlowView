@@ -398,6 +398,8 @@
             default:
                 break;
         }
+        
+        _needsReload = NO;
     }
     
     
