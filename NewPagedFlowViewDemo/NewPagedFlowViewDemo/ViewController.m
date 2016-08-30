@@ -87,11 +87,7 @@
     
     //添加到主view上
     [self.view addSubview:self.indicateLabel];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [pageFlowView reloadData];
-    });
-    
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
