@@ -66,11 +66,12 @@
     //提前告诉有多少页
     pageFlowView.orginPageCount = self.imageArray.count;
     
+    pageFlowView.isOpenAutoScroll = YES;
+    
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
-    [pageFlowView startTimer];
     
     /****************************
      使用导航控制器(UINavigationController)
@@ -86,6 +87,10 @@
     
     //添加到主view上
     [self.view addSubview:self.indicateLabel];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [pageFlowView reloadData];
+    });
     
 }
 

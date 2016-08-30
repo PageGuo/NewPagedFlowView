@@ -69,11 +69,12 @@
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
     pageFlowView.orginPageCount = self.imageArray.count;
+    pageFlowView.isOpenAutoScroll = NO;
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
-    [pageFlowView startTimer];
+    
 //    [self.view addSubview:pageFlowView];
     
     /****************************

@@ -64,6 +64,11 @@ typedef enum{
 @property (nonatomic, assign) CGFloat minimumPageScale;
 
 /**
+ *  是否开启自动滚动,默认为开启
+ */
+@property (nonatomic, assign) BOOL isOpenAutoScroll;
+
+/**
  *  当前是第几页
  */
 @property (nonatomic, assign, readonly) NSInteger currentPageIndex;
@@ -83,7 +88,9 @@ typedef enum{
  */
 @property (nonatomic, assign) NSInteger orginPageCount;
 
-
+/**
+ *  刷新视图
+ */
 - (void)reloadData;
 
 /**
@@ -101,12 +108,12 @@ typedef enum{
 - (void)scrollToPage:(NSUInteger)pageNumber;
 
 /**
- *  开启定时器
+ *  开启定时器,废弃
  */
-- (void)startTimer;
+//- (void)startTimer;
 
 /**
- *  关闭定时器
+ *  关闭定时器,关闭自动滚动
  */
 - (void)stopTimer;
 

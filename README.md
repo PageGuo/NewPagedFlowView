@@ -5,6 +5,13 @@
 * 特点:1.无限轮播;2.自动轮播;3.电影票样式的层次感;4.非当前显示view具有缩放和透明的特效
 
 ###2.版本信息
+#####Version 2.0.0:
+
+ * 是否进行自动轮播更新为参数控制,isOpenAutoScroll;
+ * 解决reloadData的bug
+
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2016-08-30)**
+***
 #####Version 1.1.5:
 
  * 首次不会自动滚动的bug
@@ -62,12 +69,12 @@
 
 ###4.功能介绍
 	/**
-	 *  开启定时器
-	*/
-	- (void)startTimer;
+     *  是否开启自动滚动,默认为开启
+     */
+    @property (nonatomic, assign) BOOL isOpenAutoScroll;
 
 	/**
-	 *  关闭定时器
+	 *  关闭定时器,关闭自动滚动
 	 */
 	- (void)stopTimer;
 	

@@ -33,6 +33,7 @@
     self.needsReload = YES;
     self.pageSize = self.bounds.size;
     self.pageCount = 0;
+    self.isOpenAutoScroll = YES;
     _currentPageIndex = 0;
     
     _minimumPageAlpha = 1.0;
@@ -65,7 +66,7 @@
 
 - (void)startTimer {
     
-    if (self.orginPageCount > 1) {
+    if (self.orginPageCount > 1 && self.isOpenAutoScroll) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
     }
     
@@ -323,6 +324,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
+    
     if (_needsReload) {
         //如果需要重新加载数据，则需要清空相关数据全部重新加载
         
@@ -368,9 +370,10 @@
                     //滚到第二组
                     [_scrollView setContentOffset:CGPointMake(_pageSize.width * self.orginPageCount, 0) animated:NO];
                     
-//                    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
-//                    self.page = self.orginPageCount;
                     self.page = self.orginPageCount;
+                    
+                    //启动自动轮播
+                    [self startTimer];
                 }
                 
                 break;
@@ -385,6 +388,9 @@
                     [_scrollView setContentOffset:CGPointMake(0, _pageSize.height * self.orginPageCount) animated:NO];
 
                     self.page = self.orginPageCount;
+                    
+                    //启动自动轮播
+                    [self startTimer];
                 }
                 
                 break;
@@ -409,6 +415,14 @@
 {
     _needsReload = YES;
     
+    //移除所有self.scrollView的子控件
+    for (UIView *view in self.scrollView.subviews) {
+        if ([NSStringFromClass(view.class) isEqualToString:@"PGIndexBannerSubiew"]) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    [self stopTimer];
     [self setNeedsLayout];
 }
 
@@ -564,7 +578,7 @@
 #pragma mark --将要结束拖拽
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     
-    if (self.orginPageCount > 1) {
+    if (self.orginPageCount > 1 && self.isOpenAutoScroll) {
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
         switch (self.orientation) {
