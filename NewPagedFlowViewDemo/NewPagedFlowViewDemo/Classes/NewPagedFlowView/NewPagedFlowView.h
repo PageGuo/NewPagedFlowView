@@ -33,17 +33,30 @@ typedef enum{
 
 @interface NewPagedFlowView : UIView<UIScrollViewDelegate>
 
-@property (nonatomic,assign) NewPagedFlowViewOrientation orientation;//默认为横向
+/**
+ *  默认为横向
+ */
+@property (nonatomic,assign) NewPagedFlowViewOrientation orientation;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic,assign) BOOL needsReload;
-@property (nonatomic,assign) CGSize pageSize; //一页的尺寸
-@property (nonatomic,assign) NSInteger pageCount;  //总页数
+
+/**
+ *  一页的尺寸
+ */
+@property (nonatomic,assign) CGSize pageSize;
+/**
+ *  总页数
+ */
+@property (nonatomic,assign) NSInteger pageCount;
 
 @property (nonatomic,strong) NSMutableArray *cells;
 @property (nonatomic,assign) NSRange visibleRange;
-@property (nonatomic,strong) NSMutableArray *reusableCells;//如果以后需要支持reuseIdentifier，这边就得使用字典类型了
+/**
+ *  如果以后需要支持reuseIdentifier，这边就得使用字典类型了
+ */
+@property (nonatomic,strong) NSMutableArray *reusableCells;
 
 @property (nonatomic,assign)   id <NewPagedFlowViewDataSource> dataSource;
 @property (nonatomic,assign)   id <NewPagedFlowViewDelegate>   delegate;

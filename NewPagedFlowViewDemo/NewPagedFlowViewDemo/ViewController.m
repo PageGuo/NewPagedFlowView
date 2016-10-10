@@ -60,11 +60,12 @@
     pageFlowView.backgroundColor = [UIColor whiteColor];
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
-    pageFlowView.minimumPageAlpha = 0.4;
+    pageFlowView.minimumPageAlpha = 0.1;
     pageFlowView.minimumPageScale = 0.85;
+    pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
     
     //提前告诉有多少页
-    pageFlowView.orginPageCount = self.imageArray.count;
+//    pageFlowView.orginPageCount = self.imageArray.count;
     
     pageFlowView.isOpenAutoScroll = YES;
     
@@ -81,6 +82,8 @@
     
     UIScrollView *bottomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [bottomScrollView addSubview:pageFlowView];
+    
+    [pageFlowView reloadData];
     
     [self.view addSubview:bottomScrollView];
     

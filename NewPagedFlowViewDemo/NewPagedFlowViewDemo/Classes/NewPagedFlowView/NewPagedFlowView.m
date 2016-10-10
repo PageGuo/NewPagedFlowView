@@ -68,6 +68,8 @@
     
     if (self.orginPageCount > 1 && self.isOpenAutoScroll) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+
     }
     
 }
@@ -82,7 +84,23 @@
     
     self.page ++;
     
-    [_scrollView setContentOffset:CGPointMake(self.page * _pageSize.width, 0) animated:YES];
+    
+    
+    switch (self.orientation) {
+        case NewPagedFlowViewOrientationHorizontal:{
+            
+            [_scrollView setContentOffset:CGPointMake(self.page * _pageSize.width, 0) animated:YES];
+            break;
+        }
+        case NewPagedFlowViewOrientationVertical:{
+            
+            [_scrollView setContentOffset:CGPointMake(0, self.page * _pageSize.height) animated:YES];
+            
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 
@@ -126,14 +144,18 @@
                     cell.coverView.alpha = (delta / _pageSize.width) * (1 - _minimumPageAlpha);
                     
                     CGFloat inset = (_pageSize.width * (1 - _minimumPageScale)) * (delta / _pageSize.width)/2.0;
+                    cell.layer.transform = CATransform3DMakeScale((_pageSize.width-inset*2)/_pageSize.width,(_pageSize.height-inset*2)/_pageSize.height, 1.0);
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
-                    cell.mainImageView.frame = cell.bounds;
+
+                    
                 } else {
                 
                     cell.coverView.alpha = _minimumPageAlpha;
                     CGFloat inset = _pageSize.width * (1 - _minimumPageScale) / 2.0 ;
+                    cell.layer.transform = CATransform3DMakeScale((_pageSize.width-inset*2)/_pageSize.width,(_pageSize.height-inset*2)/_pageSize.height, 1.0);
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
-                    cell.mainImageView.frame = cell.bounds;
+
+                    
                 }
 
             }
@@ -150,7 +172,7 @@
                 CGRect originCellFrame = CGRectMake(0, _pageSize.height * i, _pageSize.width, _pageSize.height);//如果没有缩小效果的情况下的本该的Frame
                 
                 if (delta < _pageSize.height) {
-                    cell.coverView.alpha = 1 - (delta / _pageSize.height) * (1 - _minimumPageAlpha);
+                    cell.coverView.alpha = (delta / _pageSize.height) * (1 - _minimumPageAlpha);
                     
                     CGFloat inset = (_pageSize.height * (1 - _minimumPageScale)) * (delta / _pageSize.height)/2.0;
                     cell.frame = UIEdgeInsetsInsetRect(originCellFrame, UIEdgeInsetsMake(inset, inset, inset, inset));
@@ -321,10 +343,24 @@
     return self;
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark NewPagedFlowView API
+
+- (void)reloadData
+{
+    _needsReload = YES;
     
+    //移除所有self.scrollView的子控件
+    for (UIView *view in self.scrollView.subviews) {
+        if ([NSStringFromClass(view.class) isEqualToString:@"PGIndexBannerSubiew"]) {
+            [view removeFromSuperview];
+        }
+    }
     
+    [self stopTimer];
+
     if (_needsReload) {
         //如果需要重新加载数据，则需要清空相关数据全部重新加载
         
@@ -337,6 +373,12 @@
             
             //总页数
             _pageCount = self.orginPageCount == 1 ? 1: [_dataSource numberOfPagesInFlowView:self] * 3;
+            
+            //如果总页数为0，return
+            if (_pageCount == 0) {
+                
+                return;
+            }
             
             if (self.pageControl && [self.pageControl respondsToSelector:@selector(setNumberOfPages:)]) {
                 [self.pageControl setNumberOfPages:self.orginPageCount];
@@ -386,7 +428,7 @@
                 if (self.orginPageCount > 1) {
                     //滚到第二组
                     [_scrollView setContentOffset:CGPointMake(0, _pageSize.height * self.orginPageCount) animated:NO];
-
+                    
                     self.page = self.orginPageCount;
                     
                     //启动自动轮播
@@ -406,26 +448,6 @@
     [self setPagesAtContentOffset:_scrollView.contentOffset];//根据当前scrollView的offset设置cell
     
     [self refreshVisibleCellAppearance];//更新各个可见Cell的显示外貌
-    
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
-#pragma mark NewPagedFlowView API
-
-- (void)reloadData
-{
-    _needsReload = YES;
-    
-    //移除所有self.scrollView的子控件
-    for (UIView *view in self.scrollView.subviews) {
-        if ([NSStringFromClass(view.class) isEqualToString:@"PGIndexBannerSubiew"]) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    [self stopTimer];
-    [self setNeedsLayout];
 }
 
 
@@ -486,8 +508,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-    //    NSLog(@"%f",scrollView.contentOffset.x / _pageSize.width);
-    
     if (self.orginPageCount == 0) {
         return;
     }
@@ -529,14 +549,14 @@
             {
                 if (scrollView.contentOffset.y / _pageSize.height >= 2 * self.orginPageCount) {
                     
-                    [scrollView setContentOffset:CGPointMake(_pageSize.height * self.orginPageCount, 0) animated:NO];
+                    [scrollView setContentOffset:CGPointMake(0, _pageSize.height * self.orginPageCount) animated:NO];
                     
                     self.page = self.orginPageCount;
                     
                     }
                 
                 if (scrollView.contentOffset.y / _pageSize.height <= self.orginPageCount - 1) {
-                    [scrollView setContentOffset:CGPointMake((2 * self.orginPageCount - 1) * _pageSize.height, 0) animated:NO];
+                    [scrollView setContentOffset:CGPointMake(0, (2 * self.orginPageCount - 1) * _pageSize.height) animated:NO];
                     self.page = 2 * self.orginPageCount;
                     }
 
@@ -583,6 +603,8 @@
     if (self.orginPageCount > 1 && self.isOpenAutoScroll) {
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal:
             {

@@ -69,7 +69,7 @@
     pageFlowView.minimumPageAlpha = 0.4;
     pageFlowView.minimumPageScale = 0.85;
     pageFlowView.orginPageCount = self.imageArray.count;
-    pageFlowView.isOpenAutoScroll = NO;
+    pageFlowView.isOpenAutoScroll = YES;
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
     pageFlowView.pageControl = pageControl;
@@ -84,6 +84,7 @@
      *****************************/
     
     UIScrollView *bottomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    [pageFlowView reloadData];
     [bottomScrollView addSubview:pageFlowView];
     [self.view addSubview:bottomScrollView];
     
@@ -158,6 +159,15 @@
     }
     
     return _indicateLabel;
+}
+
+#pragma mark --旋转屏幕改变newPageFlowView大小之后实现该方法
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id)coordinator {
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        [coordinator animateAlongsideTransition:^(id context) { [self.pageFlowView reloadData]; } completion:NULL];
+    }
 }
 
 - (void)dealloc {
