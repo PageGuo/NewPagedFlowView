@@ -26,45 +26,46 @@
  
  ******************************/
 
-typedef enum{
+typedef NS_ENUM(NSUInteger, NewPagedFlowViewOrientation) {
     NewPagedFlowViewOrientationHorizontal = 0,
     NewPagedFlowViewOrientationVertical
-}NewPagedFlowViewOrientation;
+};
 
 @interface NewPagedFlowView : UIView<UIScrollViewDelegate>
 
 /**
  *  默认为横向
  */
-@property (nonatomic,assign) NewPagedFlowViewOrientation orientation;
+@property (nonatomic, assign) NewPagedFlowViewOrientation orientation;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-@property (nonatomic,assign) BOOL needsReload;
+@property (nonatomic, assign) BOOL needsReload;
 
 /**
  *  一页的尺寸
  */
-@property (nonatomic,assign) CGSize pageSize;
+@property (nonatomic, assign) CGSize pageSize;
+
 /**
  *  总页数
  */
-@property (nonatomic,assign) NSInteger pageCount;
+@property (nonatomic, assign) NSInteger pageCount;
 
-@property (nonatomic,strong) NSMutableArray *cells;
-@property (nonatomic,assign) NSRange visibleRange;
+@property (nonatomic ,strong) NSMutableArray *cells;
+@property (nonatomic, assign) NSRange visibleRange;
 /**
  *  如果以后需要支持reuseIdentifier，这边就得使用字典类型了
  */
-@property (nonatomic,strong) NSMutableArray *reusableCells;
+@property (nonatomic, strong) NSMutableArray *reusableCells;
 
-@property (nonatomic,assign)   id <NewPagedFlowViewDataSource> dataSource;
-@property (nonatomic,assign)   id <NewPagedFlowViewDelegate>   delegate;
+@property (nonatomic, assign) id <NewPagedFlowViewDataSource> dataSource;
+@property (nonatomic, assign) id <NewPagedFlowViewDelegate> delegate;
 
 /**
  *  指示器
  */
-@property (nonatomic,retain)  UIPageControl *pageControl;
+@property (nonatomic,retain) UIPageControl *pageControl;
 
 /**
  *  非当前页的透明比例
@@ -75,6 +76,11 @@ typedef enum{
  *  非当前页的缩放比例
  */
 @property (nonatomic, assign) CGFloat minimumPageScale;
+
+/**
+ *  是否开启循环播放
+ */
+@property (nonatomic, assign) BOOL isLooping;
 
 /**
  *  是否开启自动滚动,默认为开启
@@ -94,7 +100,7 @@ typedef enum{
 /**
  *  自动切换视图的时间,默认是5.0
  */
-@property (nonatomic, assign) CGFloat autoTime;
+@property (nonatomic, assign) NSTimeInterval autoTime;
 
 /**
  *  原始页数
@@ -108,22 +114,13 @@ typedef enum{
 
 /**
  *  获取可重复使用的Cell
- *
- *  @return <#return value description#>
  */
-- (UIView *)dequeueReusableCell;
+- (__kindof UIView *)dequeueReusableCell;
 
 /**
  *  滚动到指定的页面
- *
- *  @param pageNumber <#pageNumber description#>
  */
 - (void)scrollToPage:(NSUInteger)pageNumber;
-
-/**
- *  开启定时器,废弃
- */
-//- (void)startTimer;
 
 /**
  *  关闭定时器,关闭自动滚动
@@ -158,8 +155,6 @@ typedef enum{
  *
  *  @param subView 点击的控件
  *  @param subIndex    点击控件的index
- *
- *  @return <#return value description#>
  */
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex;
 

@@ -70,12 +70,13 @@
     pageFlowView.minimumPageScale = 0.85;
     pageFlowView.orginPageCount = self.imageArray.count;
     pageFlowView.isOpenAutoScroll = YES;
+    pageFlowView.isLooping = true;
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
     
-//    [self.view addSubview:pageFlowView];
+    // [self.view addSubview:pageFlowView];
     
     /****************************
      使用导航控制器(UINavigationController)
@@ -173,7 +174,7 @@
 - (void)dealloc {
     
     /****************************
-    在dealloc或者返回按钮里停止定时器
+     在dealloc或者返回按钮里停止定时器
      ****************************/
     
     [self.pageFlowView stopTimer];
