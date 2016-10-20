@@ -47,14 +47,11 @@
 
 #pragma mark --push控制器
 - (void)pushVC {
-    
     TestViewController *testVC = [[TestViewController alloc] init];
-    
     [self.navigationController pushViewController:testVC animated:YES];
 }
 
 - (void)setupUI {
-    
     
     NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 8, Width, (Width - 84) * 9 / 16 + 24)];
     pageFlowView.backgroundColor = [UIColor whiteColor];
@@ -62,10 +59,12 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.1;
     pageFlowView.minimumPageScale = 0.85;
+    pageFlowView.isOpenAutoScroll = false;
+    pageFlowView.isLooping = false;
     pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
     
-    //提前告诉有多少页
-//    pageFlowView.orginPageCount = self.imageArray.count;
+    // 提前告诉有多少页
+    // pageFlowView.orginPageCount = self.imageArray.count;
     
     pageFlowView.isOpenAutoScroll = YES;
     
@@ -90,7 +89,7 @@
     
     //添加到主view上
     [self.view addSubview:self.indicateLabel];
-
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -118,7 +117,7 @@
 }
 
 - (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
     if (!bannerView) {
         bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width - 84, (Width - 84) * 9 / 16)];
         bannerView.layer.cornerRadius = 4;
