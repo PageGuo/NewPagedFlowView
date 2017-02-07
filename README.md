@@ -1,10 +1,17 @@
-# NewPagedFlowView 3.0.0
+# NewPagedFlowView 3.1.0
 ###1.实现了什么功能
 * 页面滚动的方向分为横向和纵向
 * 目的:实现类似于选择电影票的效果,并且实现无限/自动轮播
 * 特点:1.无限轮播;2.自动轮播;3.电影票样式的层次感;4.非当前显示view具有缩放和透明的特效
 
 ###2.版本信息
+#####Version 3.1.0:
+
+ * 添加参数控制是否支持无限轮播
+ * 左右滑动透明度的bug修复.
+
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-02-07)**
+***
 #####Version 3.0.0:
 
  * 弃用layoutSubviews，需要手动调用reloadData，方便懒加载等;
@@ -38,6 +45,10 @@
      *  是否开启自动滚动,默认为开启
      */
     @property (nonatomic, assign) BOOL isOpenAutoScroll;
+    /**
+     *  是否开启无限轮播,默认为开启
+     */
+    @property (nonatomic, assign) BOOL isCarousel;
 
 	/**
 	 *  关闭定时器,关闭自动滚动

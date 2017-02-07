@@ -62,6 +62,7 @@
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.1;
     pageFlowView.minimumPageScale = 0.85;
+    pageFlowView.isCarousel = NO;
     pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
     
     //提前告诉有多少页
@@ -121,6 +122,7 @@
     PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
     if (!bannerView) {
         bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width - 84, (Width - 84) * 9 / 16)];
+        bannerView.tag = index;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
