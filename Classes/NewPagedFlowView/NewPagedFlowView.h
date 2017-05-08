@@ -41,11 +41,6 @@ typedef enum{
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic,assign) BOOL needsReload;
-
-/**
- *  一页的尺寸
- */
-@property (nonatomic,assign) CGSize pageSize;
 /**
  *  总页数
  */
@@ -72,9 +67,14 @@ typedef enum{
 @property (nonatomic, assign) CGFloat minimumPageAlpha;
 
 /**
- *  非当前页的缩放比例
+ 左右间距,默认20
  */
-@property (nonatomic, assign) CGFloat minimumPageScale;
+@property (nonatomic, assign) CGFloat leftRightMargin;
+
+/**
+ 上下间距,默认30
+ */
+@property (nonatomic, assign) CGFloat topBottomMargin;
 
 /**
  *  是否开启自动滚动,默认为开启
@@ -140,8 +140,9 @@ typedef enum{
 
 @protocol  NewPagedFlowViewDelegate<NSObject>
 
+@optional
 /**
- *  单个子控件的Size
+ *  当前显示cell的Size
  *
  *  @param flowView <#flowView description#>
  *
@@ -149,7 +150,6 @@ typedef enum{
  */
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView;
 
-@optional
 /**
  *  滚动到了某一列
  *
