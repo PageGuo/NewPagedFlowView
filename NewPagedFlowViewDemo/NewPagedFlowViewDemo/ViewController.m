@@ -56,22 +56,16 @@
 - (void)setupUI {
     
     
-    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 8, Width, (Width - 84) * 9 / 16 + 24)];
-    pageFlowView.backgroundColor = [UIColor whiteColor];
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 8, Width, Width * 9 / 16)];
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.1;
-    pageFlowView.minimumPageScale = 0.85;
     pageFlowView.isCarousel = NO;
     pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-    
-    //提前告诉有多少页
-//    pageFlowView.orginPageCount = self.imageArray.count;
-    
     pageFlowView.isOpenAutoScroll = YES;
     
     //初始化pageControl
-    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24 - 8, Width, 8)];
+    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 32, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
     
@@ -101,9 +95,8 @@
 
 #pragma mark NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(Width - 84, (Width - 84) * 9 / 16);
+    return CGSizeMake(Width - 60, (Width - 60) * 9 / 16);
 }
-
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
@@ -121,7 +114,7 @@
 - (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
     PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
     if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width - 84, (Width - 84) * 9 / 16)];
+        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width, Width * 9 / 16)];
         bannerView.tag = index;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
@@ -149,7 +142,7 @@
 - (UILabel *)indicateLabel {
     
     if (_indicateLabel == nil) {
-        _indicateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, Width, 16)];
+        _indicateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, Width, 16)];
         _indicateLabel.textColor = [UIColor blueColor];
         _indicateLabel.font = [UIFont systemFontOfSize:16.0];
         _indicateLabel.textAlignment = NSTextAlignmentCenter;

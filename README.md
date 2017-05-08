@@ -5,6 +5,14 @@
 * 特点:1.无限轮播;2.自动轮播;3.电影票样式的层次感;4.非当前显示view具有缩放和透明的特效
 
 ###2.版本信息
+#####Version 3.2.0:
+
+ * 添加参数(leftRightMargin、topBottomMargin)可自定义控制上下左右间距
+ * 修复部分bug.
+ * pageSize使用更方便
+
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-05-08)**
+***
 #####Version 3.1.0:
 
  * 添加参数控制是否支持无限轮播
@@ -49,6 +57,15 @@
      *  是否开启无限轮播,默认为开启
      */
     @property (nonatomic, assign) BOOL isCarousel;
+    /**
+     * 左右间距,默认20
+     */
+    @property (nonatomic, assign) CGFloat leftRightMargin;
+
+    /**
+     * 上下间距,默认30
+    */
+    @property (nonatomic, assign) CGFloat topBottomMargin;
 
 	/**
 	 *  关闭定时器,关闭自动滚动
