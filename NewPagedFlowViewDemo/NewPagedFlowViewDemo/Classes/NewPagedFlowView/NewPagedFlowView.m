@@ -145,7 +145,7 @@ static NSString *subviewClassName;
 
 - (void)refreshVisibleCellAppearance{
     
-    if (_minimumPageAlpha == 1.0) {
+    if (_minimumPageAlpha == 1.0 && self.leftRightMargin == 0 && self.topBottomMargin == 0) {
         return;//无需更新
     }
     switch (self.orientation) {
