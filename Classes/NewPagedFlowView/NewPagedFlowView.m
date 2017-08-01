@@ -378,7 +378,7 @@ static NSString *subviewClassName;
     
     //移除所有self.scrollView的子控件
     for (UIView *view in self.scrollView.subviews) {
-        if ([NSStringFromClass(view.class) isEqualToString:subviewClassName]) {
+        if ([NSStringFromClass(view.class) isEqualToString:subviewClassName] || [view isKindOfClass:[PGIndexBannerSubiew class]]) {
             [view removeFromSuperview];
         }
     }

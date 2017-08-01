@@ -1,4 +1,4 @@
-# NewPagedFlowView 3.2.0
+# NewPagedFlowView 3.2.1
 ###1.实现了什么功能
 * 页面滚动的方向分为横向和纵向
 * 目的:实现类似于选择电影票的效果,并且实现无限/自动轮播
@@ -6,13 +6,15 @@
 
 ###2.版本信息
 
-#####Version 3.2.0:
+#####Version 3.2.1:
 
  * 添加参数(leftRightMargin、topBottomMargin)可自定义控制上下左右间距
  * 修复部分bug.
  * pageSize使用更方便
+ * fix bug
+ * 3.3.0完善demo的使用,请等待~求star
 
-**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-05-08)**
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-08-01)**
 ***
 #####Version 3.1.0:
 
