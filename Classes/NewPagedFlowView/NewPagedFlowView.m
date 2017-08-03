@@ -87,8 +87,9 @@ static NSString *subviewClassName;
 - (void)startTimer {
     
     if (self.orginPageCount > 1 && self.isOpenAutoScroll && self.isCarousel) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
+        self.timer = timer;
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
     }
     
@@ -97,6 +98,7 @@ static NSString *subviewClassName;
 - (void)stopTimer {
     
     [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark --自动轮播
@@ -653,18 +655,18 @@ static NSString *subviewClassName;
 
 #pragma mark --将要开始拖拽
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    
-    [self.timer invalidate];
-    
+    [self stopTimer];
+}
+
+#pragma mark --结束拖拽
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self startTimer];
 }
 
 #pragma mark --将要结束拖拽
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     
     if (self.orginPageCount > 1 && self.isOpenAutoScroll && self.isCarousel) {
-        
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoTime target:self selector:@selector(autoNextPage) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
         
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal:
