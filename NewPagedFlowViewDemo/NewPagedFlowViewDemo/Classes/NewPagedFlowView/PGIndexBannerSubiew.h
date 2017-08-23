@@ -28,4 +28,6 @@
  */
 @property (nonatomic, strong) UIView *coverView;
 
+@property (nonatomic, copy) void (^didSelectCellBlock)(NSInteger tag, PGIndexBannerSubiew *cell);
+
 @end

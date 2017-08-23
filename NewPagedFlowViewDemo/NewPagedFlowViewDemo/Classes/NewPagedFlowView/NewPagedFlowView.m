@@ -228,10 +228,14 @@ static NSString *subviewClassName;
         NSAssert(cell!=nil, @"datasource must not return nil");
         [_cells replaceObjectAtIndex:pageIndex withObject:cell];
         
-        //添加点击手势
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleCellTapAction:)];
-        [cell addGestureRecognizer:singleTap];
         cell.tag = pageIndex % self.orginPageCount;
+        
+        PGIndexBannerSubiew *indexBannerSubiew = (PGIndexBannerSubiew *)cell;
+        
+        __weak __typeof(self) weakSelf = self;
+        indexBannerSubiew.didSelectCellBlock = ^(NSInteger tag, PGIndexBannerSubiew *cell) {
+            [weakSelf singleCellTapAction:tag withCell:cell];
+        };
         
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal:
@@ -701,11 +705,11 @@ static NSString *subviewClassName;
 }
 
 //点击了cell
-- (void)singleCellTapAction:(UIGestureRecognizer *)gesture {
+- (void)singleCellTapAction:(NSInteger)selectTag withCell:(PGIndexBannerSubiew *)cell {
     
     if ([self.delegate respondsToSelector:@selector(didSelectCell:withSubViewIndex:)]) {
         
-        [self.delegate didSelectCell:gesture.view withSubViewIndex:gesture.view.tag];
+        [self.delegate didSelectCell:cell withSubViewIndex:selectTag];
         
     }
 }

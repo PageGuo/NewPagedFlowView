@@ -6,15 +6,15 @@
 
 ###2.版本信息
 
-#####Version 3.2.2:
+#####Version 3.2.3:
 
  * 添加参数(leftRightMargin、topBottomMargin)可自定义控制上下左右间距
  * 修复部分bug.
  * pageSize使用更方便
- * fix bug
+ * fix bug,滚动多次无法滑动的问题
  * 3.3.0完善demo的使用,请等待~求star
 
-**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-08-03)**
+**具体含义请看源代码, 如发现bug请联系:799573715@qq.com (2017-08-23)**
 ***
 #####Version 3.1.0:
 
