@@ -6,13 +6,13 @@
 //  Copyright © 2016年 robertcell.net. All rights reserved.
 //
 
-#import "TestViewController.h"
+#import "CustomViewController.h"
 #import "NewPagedFlowView.h"
-#import "PGIndexBannerSubiew.h"
+#import "PGCustomBannerView.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 
-@interface TestViewController ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
+@interface CustomViewController ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
 
 /**
  *  图片数组
@@ -31,13 +31,13 @@
 
 @end
 
-@implementation TestViewController
+@implementation CustomViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.title = @"NewPagedFlowView1";
+    self.title = @"CustomNewPagedFlowView";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Scroll" style:UIBarButtonItemStyleDone target:self action:@selector(gotoPage)];
     
@@ -61,33 +61,28 @@
 
 - (void)setupUI {
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 8, Width, Width * 9 / 16)];
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 72, Width, Width * 9 / 16)];
     pageFlowView.backgroundColor = [UIColor whiteColor];
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.4;
+    
+#warning 假设产品需求左右卡片间距30,底部对齐
+    pageFlowView.leftRightMargin = 30;
+    pageFlowView.topBottomMargin = 0;
+    
     pageFlowView.orginPageCount = self.imageArray.count;
     pageFlowView.isOpenAutoScroll = YES;
+    
     //初始化pageControl
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 24, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
-    
-//    [self.view addSubview:pageFlowView];
-    
-    /****************************
-     使用导航控制器(UINavigationController)
-     如果控制器中不存在UIScrollView或者继承自UIScrollView的UI控件
-     请使用UIScrollView作为NewPagedFlowView的容器View,才会显示正常,如下
-     *****************************/
-    
-    UIScrollView *bottomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [pageFlowView reloadData];
-    [bottomScrollView addSubview:pageFlowView];
-    [self.view addSubview:bottomScrollView];
+    [self.view addSubview:pageFlowView];
     
-    [bottomScrollView addSubview:pageFlowView];
     
     self.pageFlowView = pageFlowView;
     //添加到主view上
@@ -95,12 +90,7 @@
     
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-#pragma mark NewPagedFlowView Delegate
+#pragma mark --NewPagedFlowView Delegate
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
@@ -108,31 +98,37 @@
     self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)subIndex + 1];
 }
 
-#pragma mark NewPagedFlowView Datasource
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    
+    NSLog(@"CustomViewController 滚动到了第%ld页",pageNumber);
+}
+
+#warning 假设产品需求左右中间页显示大小为 Width - 50, (Width - 50) * 9 / 16
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+    return CGSizeMake(Width - 50, (Width - 50) * 9 / 16);
+}
+
+#pragma mark --NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.imageArray.count;
 }
 
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
     
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+    PGCustomBannerView *bannerView = (PGCustomBannerView *)[flowView dequeueReusableCell];
     if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width, Width * 9 / 16)];
+        bannerView = [[PGCustomBannerView alloc] init];
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
     
     //在这里下载网络图片
     //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
+    
     bannerView.mainImageView.image = self.imageArray[index];
-    
+    bannerView.indexLabel.text = [NSString stringWithFormat:@"第%ld张图",(long)index + 1];
     return bannerView;
-}
-
-- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    
-    NSLog(@"TestViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark --懒加载
@@ -161,7 +157,9 @@
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
     {
-        [coordinator animateAlongsideTransition:^(id context) { [self.pageFlowView reloadData]; } completion:NULL];
+        [coordinator animateAlongsideTransition:^(id context) {
+            [self.pageFlowView reloadData];
+        } completion:NULL];
     }
 }
 

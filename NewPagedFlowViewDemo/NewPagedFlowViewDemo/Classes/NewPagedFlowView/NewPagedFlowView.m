@@ -9,7 +9,6 @@
 //  github:https://github.com/PageGuo/NewPagedFlowView
 
 #import "NewPagedFlowView.h"
-#import "PGIndexBannerSubiew.h"
 
 @interface NewPagedFlowView ()
 
@@ -64,14 +63,7 @@ static NSString *subviewClassName;
     
     subviewClassName = @"PGIndexBannerSubiew";
     
-    /*由于UIScrollView在滚动之后会调用自己的layoutSubviews以及父View的layoutSubviews
-     这里为了避免scrollview滚动带来自己layoutSubviews的调用,所以给scrollView加了一层父View
-     */
-    UIView *superViewOfScrollView = [[UIView alloc] initWithFrame:self.bounds];
-    [superViewOfScrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-    [superViewOfScrollView setBackgroundColor:[UIColor clearColor]];
-    [superViewOfScrollView addSubview:self.scrollView];
-    [self addSubview:superViewOfScrollView];
+    [self addSubview:self.scrollView];
     
 }
 
@@ -126,12 +118,12 @@ static NSString *subviewClassName;
 }
 
 
-- (void)queueReusableCell:(UIView *)cell{
+- (void)queueReusableCell:(PGIndexBannerSubiew *)cell{
     [_reusableCells addObject:cell];
 }
 
 - (void)removeCellAtIndex:(NSInteger)index{
-    UIView *cell = [_cells objectAtIndex:index];
+    PGIndexBannerSubiew *cell = [_cells objectAtIndex:index];
     if ((NSObject *)cell == [NSNull null]) {
         return;
     }
@@ -221,7 +213,7 @@ static NSString *subviewClassName;
 - (void)setPageAtIndex:(NSInteger)pageIndex{
     NSParameterAssert(pageIndex >= 0 && pageIndex < [_cells count]);
     
-    UIView *cell = [_cells objectAtIndex:pageIndex];
+    PGIndexBannerSubiew *cell = [_cells objectAtIndex:pageIndex];
     
     if ((NSObject *)cell == [NSNull null]) {
         cell = [_dataSource flowView:self cellForPageAtIndex:pageIndex % self.orginPageCount];
@@ -229,11 +221,10 @@ static NSString *subviewClassName;
         [_cells replaceObjectAtIndex:pageIndex withObject:cell];
         
         cell.tag = pageIndex % self.orginPageCount;
-        
-        PGIndexBannerSubiew *indexBannerSubiew = (PGIndexBannerSubiew *)cell;
+        [cell setSubviewsWithSuperViewBounds:CGRectMake(0, 0, _pageSize.width, _pageSize.height)];
         
         __weak __typeof(self) weakSelf = self;
-        indexBannerSubiew.didSelectCellBlock = ^(NSInteger tag, PGIndexBannerSubiew *cell) {
+        cell.didSelectCellBlock = ^(NSInteger tag, PGIndexBannerSubiew *cell) {
             [weakSelf singleCellTapAction:tag withCell:cell];
         };
         
@@ -378,8 +369,7 @@ static NSString *subviewClassName;
 #pragma mark -
 #pragma mark NewPagedFlowView API
 
-- (void)reloadData
-{
+- (void)reloadData {
     _needsReload = YES;
     
     //移除所有self.scrollView的子控件
@@ -439,7 +429,7 @@ static NSString *subviewClassName;
         switch (self.orientation) {
             case NewPagedFlowViewOrientationHorizontal://横向
                 _scrollView.frame = CGRectMake(0, 0, _pageSize.width, _pageSize.height);
-                _scrollView.contentSize = CGSizeMake(_pageSize.width * _pageCount,_pageSize.height);
+                _scrollView.contentSize = CGSizeMake(_pageSize.width * _pageCount,0);
                 CGPoint theCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
                 _scrollView.center = theCenter;
                 
@@ -468,7 +458,7 @@ static NSString *subviewClassName;
                 break;
             case NewPagedFlowViewOrientationVertical:{
                 _scrollView.frame = CGRectMake(0, 0, _pageSize.width, _pageSize.height);
-                _scrollView.contentSize = CGSizeMake(_pageSize.width ,_pageSize.height * _pageCount);
+                _scrollView.contentSize = CGSizeMake(0 ,_pageSize.height * _pageCount);
                 CGPoint theCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
                 _scrollView.center = theCenter;
                 
@@ -508,7 +498,7 @@ static NSString *subviewClassName;
 }
 
 
-- (UIView *)dequeueReusableCell{
+- (PGIndexBannerSubiew *)dequeueReusableCell{
     PGIndexBannerSubiew *cell = [_reusableCells lastObject];
     if (cell)
     {
