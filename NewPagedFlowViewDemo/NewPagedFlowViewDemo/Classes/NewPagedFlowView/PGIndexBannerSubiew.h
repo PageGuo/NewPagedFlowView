@@ -10,7 +10,7 @@
 
 /******************************
  
- 可以根据自己的需要再次重写view
+ 可以根据自己的需要继承PGIndexBannerSubiew
  
  ******************************/
 
@@ -27,5 +27,14 @@
  *  用来变色的view
  */
 @property (nonatomic, strong) UIView *coverView;
+
+@property (nonatomic, copy) void (^didSelectCellBlock)(NSInteger tag, PGIndexBannerSubiew *cell);
+
+/**
+ 设置子控件frame,继承后要重写
+
+ @param superViewBounds <#superViewBounds description#>
+ */
+- (void)setSubviewsWithSuperViewBounds:(CGRect)superViewBounds;
 
 @end

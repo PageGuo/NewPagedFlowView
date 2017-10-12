@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "NewPagedFlowView.h"
 #import "PGIndexBannerSubiew.h"
-#import "TestViewController.h"
+#import "CustomViewController.h"
 
 #define Width [UIScreen mainScreen].bounds.size.width
 
@@ -35,7 +35,7 @@
     
     self.title = @"NewPagedFlowView";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Push" style:UIBarButtonItemStyleDone target:self action:@selector(pushVC)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Custom" style:UIBarButtonItemStyleDone target:self action:@selector(pushCustomVC)];
     
     for (int index = 0; index < 5; index++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Yosemite%02d",index]];
@@ -46,17 +46,19 @@
 }
 
 #pragma mark --push控制器
-- (void)pushVC {
+- (void)pushCustomVC {
+
+    //完全自定义,注意两处 #warning !!!!!!!!!1
+    CustomViewController *customVC = [[CustomViewController alloc] init];
     
-    TestViewController *testVC = [[TestViewController alloc] init];
-    
-    [self.navigationController pushViewController:testVC animated:YES];
+    [self.navigationController pushViewController:customVC animated:YES];
 }
 
 - (void)setupUI {
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 8, Width, Width * 9 / 16)];
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 72, Width, Width * 9 / 16)];
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.1;
@@ -68,40 +70,31 @@
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, pageFlowView.frame.size.height - 32, Width, 8)];
     pageFlowView.pageControl = pageControl;
     [pageFlowView addSubview:pageControl];
-    
-    /****************************
-     使用导航控制器(UINavigationController)
-     如果控制器中不存在UIScrollView或者继承自UIScrollView的UI控件
-     请使用UIScrollView作为NewPagedFlowView的容器View,才会显示正常,如下
-     *****************************/
-    
-    UIScrollView *bottomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    [bottomScrollView addSubview:pageFlowView];
-    
     [pageFlowView reloadData];
     
-    [self.view addSubview:bottomScrollView];
-    
+    [self.view addSubview:pageFlowView];
     
     //添加到主view上
     [self.view addSubview:self.indicateLabel];
 
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
 
 #pragma mark NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     return CGSizeMake(Width - 60, (Width - 60) * 9 / 16);
 }
+
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
     
     self.indicateLabel.text = [NSString stringWithFormat:@"点击了第%ld张图",(long)subIndex + 1];
+}
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    
+    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource
@@ -111,10 +104,10 @@
     
 }
 
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
     if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, Width, Width * 9 / 16)];
+        bannerView = [[PGIndexBannerSubiew alloc] init];
         bannerView.tag = index;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
@@ -126,10 +119,6 @@
     return bannerView;
 }
 
-- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
-}
 
 #pragma mark --懒加载
 - (NSMutableArray *)imageArray {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F569CBDB1F4D818C004FBAF7 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = F569CBDA1F4D818C004FBAF7 /* PGIndexBannerSubiew.m */; };
+		F590C4A91F4ED5EA009101A9 /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F590C4A81F4ED5EA009101A9 /* PGCustomBannerView.m */; };
 		FB8021421D50891C005E7B14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021411D50891C005E7B14 /* main.m */; };
 		FB8021451D50891C005E7B14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021441D50891C005E7B14 /* AppDelegate.m */; };
 		FB8021481D50891C005E7B14 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021471D50891C005E7B14 /* ViewController.m */; };
@@ -15,9 +17,8 @@
 		FB8021501D50891C005E7B14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB80214E1D50891C005E7B14 /* LaunchScreen.storyboard */; };
 		FB80215B1D50891C005E7B14 /* NewPagedFlowViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB80215A1D50891C005E7B14 /* NewPagedFlowViewDemoTests.m */; };
 		FB8021661D50891C005E7B14 /* NewPagedFlowViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021651D50891C005E7B14 /* NewPagedFlowViewDemoUITests.m */; };
-		FB80217A1D508BDA005E7B14 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021761D508BDA005E7B14 /* PGIndexBannerSubiew.m */; };
 		FB80217B1D508BDA005E7B14 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8021791D508BDA005E7B14 /* NewPagedFlowView.m */; };
-		FBA0577F1D5C72BF002DE2E0 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */; };
+		FBA0577F1D5C72BF002DE2E0 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA0577E1D5C72BF002DE2E0 /* CustomViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F569CBD91F4D818C004FBAF7 /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
+		F569CBDA1F4D818C004FBAF7 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
+		F590C4A71F4ED5EA009101A9 /* PGCustomBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCustomBannerView.h; sourceTree = "<group>"; };
+		F590C4A81F4ED5EA009101A9 /* PGCustomBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCustomBannerView.m; sourceTree = "<group>"; };
 		FB80213D1D50891C005E7B14 /* NewPagedFlowViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewPagedFlowViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8021411D50891C005E7B14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FB8021431D50891C005E7B14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,12 +59,10 @@
 		FB8021611D50891C005E7B14 /* NewPagedFlowViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewPagedFlowViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8021651D50891C005E7B14 /* NewPagedFlowViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowViewDemoUITests.m; sourceTree = "<group>"; };
 		FB8021671D50891C005E7B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FB8021751D508BDA005E7B14 /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
-		FB8021761D508BDA005E7B14 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
 		FB8021781D508BDA005E7B14 /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
 		FB8021791D508BDA005E7B14 /* NewPagedFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowView.m; sourceTree = "<group>"; };
-		FBA0577D1D5C72BF002DE2E0 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		FBA0577D1D5C72BF002DE2E0 /* CustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
+		FBA0577E1D5C72BF002DE2E0 /* CustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F590C4A51F4ED4F2009101A9 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				FB8021461D50891C005E7B14 /* ViewController.h */,
+				FB8021471D50891C005E7B14 /* ViewController.m */,
+			);
+			name = Default;
+			sourceTree = "<group>";
+		};
+		F590C4A61F4ED50D009101A9 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				FBA0577D1D5C72BF002DE2E0 /* CustomViewController.h */,
+				FBA0577E1D5C72BF002DE2E0 /* CustomViewController.m */,
+				F590C4A71F4ED5EA009101A9 /* PGCustomBannerView.h */,
+				F590C4A81F4ED5EA009101A9 /* PGCustomBannerView.m */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
 		FB8021341D50891C005E7B14 = {
 			isa = PBXGroup;
 			children = (
@@ -111,12 +134,10 @@
 			isa = PBXGroup;
 			children = (
 				FB8021731D508BDA005E7B14 /* Classes */,
+				F590C4A51F4ED4F2009101A9 /* Default */,
+				F590C4A61F4ED50D009101A9 /* Custom */,
 				FB8021431D50891C005E7B14 /* AppDelegate.h */,
 				FB8021441D50891C005E7B14 /* AppDelegate.m */,
-				FB8021461D50891C005E7B14 /* ViewController.h */,
-				FB8021471D50891C005E7B14 /* ViewController.m */,
-				FBA0577D1D5C72BF002DE2E0 /* TestViewController.h */,
-				FBA0577E1D5C72BF002DE2E0 /* TestViewController.m */,
 				FB8021491D50891C005E7B14 /* Main.storyboard */,
 				FB80214C1D50891C005E7B14 /* Assets.xcassets */,
 				FB80214E1D50891C005E7B14 /* LaunchScreen.storyboard */,
@@ -155,24 +176,16 @@
 		FB8021731D508BDA005E7B14 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FB8021741D508BDA005E7B14 /* CustomeView */,
 				FB8021771D508BDA005E7B14 /* NewPagedFlowView */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		FB8021741D508BDA005E7B14 /* CustomeView */ = {
-			isa = PBXGroup;
-			children = (
-				FB8021751D508BDA005E7B14 /* PGIndexBannerSubiew.h */,
-				FB8021761D508BDA005E7B14 /* PGIndexBannerSubiew.m */,
-			);
-			path = CustomeView;
-			sourceTree = "<group>";
-		};
 		FB8021771D508BDA005E7B14 /* NewPagedFlowView */ = {
 			isa = PBXGroup;
 			children = (
+				F569CBD91F4D818C004FBAF7 /* PGIndexBannerSubiew.h */,
+				F569CBDA1F4D818C004FBAF7 /* PGIndexBannerSubiew.m */,
 				FB8021781D508BDA005E7B14 /* NewPagedFlowView.h */,
 				FB8021791D508BDA005E7B14 /* NewPagedFlowView.m */,
 			);
@@ -246,7 +259,7 @@
 				TargetAttributes = {
 					FB80213C1D50891C005E7B14 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = XF9YMRY452;
+						DevelopmentTeam = 62K8MBYJ3Q;
 					};
 					FB8021551D50891C005E7B14 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -310,9 +323,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBA0577F1D5C72BF002DE2E0 /* TestViewController.m in Sources */,
-				FB80217A1D508BDA005E7B14 /* PGIndexBannerSubiew.m in Sources */,
+				F590C4A91F4ED5EA009101A9 /* PGCustomBannerView.m in Sources */,
+				FBA0577F1D5C72BF002DE2E0 /* CustomViewController.m in Sources */,
 				FB8021481D50891C005E7B14 /* ViewController.m in Sources */,
+				F569CBDB1F4D818C004FBAF7 /* PGIndexBannerSubiew.m in Sources */,
 				FB80217B1D508BDA005E7B14 /* NewPagedFlowView.m in Sources */,
 				FB8021451D50891C005E7B14 /* AppDelegate.m in Sources */,
 				FB8021421D50891C005E7B14 /* main.m in Sources */,
@@ -457,7 +471,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = XF9YMRY452;
+				DEVELOPMENT_TEAM = 62K8MBYJ3Q;
 				INFOPLIST_FILE = NewPagedFlowViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -471,7 +485,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = XF9YMRY452;
+				DEVELOPMENT_TEAM = 62K8MBYJ3Q;
 				INFOPLIST_FILE = NewPagedFlowViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
