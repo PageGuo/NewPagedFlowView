@@ -99,6 +99,12 @@ static NSString *subviewClassName;
     [self.timer invalidate];
 }
 
+- (void)adjustCenterSubview {
+    if (self.isOpenAutoScroll && self.orginPageCount > 0) {
+        [_scrollView setContentOffset:CGPointMake(_pageSize.width * self.page, 0) animated:NO];
+    }
+}
+
 #pragma mark --自动轮播
 - (void)autoNextPage {
     

@@ -135,6 +135,11 @@ typedef enum{
  */
 - (void)stopTimer;
 
+/**
+ 调整中间页居中，经常出现滚动卡住一半时调用
+ */
+- (void)adjustCenterSubview;
+
 @end
 
 
