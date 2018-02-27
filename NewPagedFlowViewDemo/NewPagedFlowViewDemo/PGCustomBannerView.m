@@ -32,7 +32,7 @@
     }
     
     self.mainImageView.frame = superViewBounds;
-    self.coverView.frame = self.bounds;
+    self.coverView.frame = superViewBounds;
     self.indexLabel.frame = CGRectMake(0, 10, superViewBounds.size.width, 20);
 }
 

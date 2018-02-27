@@ -40,7 +40,7 @@
     }
     
     self.mainImageView.frame = superViewBounds;
-    self.coverView.frame = self.bounds;
+    self.coverView.frame = superViewBounds;
 }
 
 - (UIImageView *)mainImageView {

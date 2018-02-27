@@ -89,8 +89,10 @@ static NSString *subviewClassName;
 
 - (void)stopTimer {
     
-    [self.timer invalidate];
-    self.timer = nil;
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
 }
 
 - (void)adjustCenterSubview {
@@ -417,7 +419,7 @@ static NSString *subviewClassName;
         
         //重置pageWidth
         _pageSize = CGSizeMake(self.bounds.size.width - 4 * self.leftRightMargin,(self.bounds.size.width - 4 * self.leftRightMargin) * 9 /16);
-        if (self.delegate && [self.delegate respondsToSelector:@selector(sizeForPageInFlowView:)]) {
+        if (self.delegate && self.delegate && [self.delegate respondsToSelector:@selector(sizeForPageInFlowView:)]) {
             _pageSize = [self.delegate sizeForPageInFlowView:self];
         }
         
@@ -646,7 +648,7 @@ static NSString *subviewClassName;
         [self.pageControl setCurrentPage:pageIndex];
     }
     
-    if ([_delegate respondsToSelector:@selector(didScrollToPage:inFlowView:)] && _currentPageIndex != pageIndex && pageIndex >= 0) {
+    if (_delegate && [_delegate respondsToSelector:@selector(didScrollToPage:inFlowView:)] && _currentPageIndex != pageIndex && pageIndex >= 0) {
         [_delegate didScrollToPage:pageIndex inFlowView:self];
     }
     
@@ -703,11 +705,23 @@ static NSString *subviewClassName;
 //点击了cell
 - (void)singleCellTapAction:(NSInteger)selectTag withCell:(PGIndexBannerSubiew *)cell {
     
-    if ([self.delegate respondsToSelector:@selector(didSelectCell:withSubViewIndex:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectCell:withSubViewIndex:)]) {
         
         [self.delegate didSelectCell:cell withSubViewIndex:selectTag];
         
     }
+}
+
+//解决当父View释放时，当前视图因为被Timer强引用而不能释放的问题
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    if (!newSuperview) {
+        [self stopTimer];
+    }
+}
+
+//解决当timer释放后 回调scrollViewDidScroll时访问野指针导致崩溃
+- (void)dealloc {
+    _scrollView.delegate = nil;
 }
 
 @end
